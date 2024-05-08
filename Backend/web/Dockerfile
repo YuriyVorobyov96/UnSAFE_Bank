@@ -7,7 +7,10 @@ COPY . /app
 # add the node_modules folder to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 # install and cache dependencies
-RUN yarn -s
+RUN apk add --update python make g++ && rm -rf /var/cache/apk/*
+RUN yarn cache clean --all
+RUN yarn install
+# RUN npx browserslist@latest --update-db
 # build the project for production
 RUN yarn build -s
 
